@@ -172,3 +172,5 @@ export default function Sidebar({ activeView, onNavigate, collapsed, onToggle })
     </motion.aside>
   );
 }
+
+

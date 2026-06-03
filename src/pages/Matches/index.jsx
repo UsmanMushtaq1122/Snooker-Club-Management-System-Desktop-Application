@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { HiOutlineSearch } from 'react-icons/hi';
 
@@ -56,7 +56,7 @@ export default function Matches({ onRefresh }) {
                   <td className="p-3"><span className={`badge ${g.match_type === 'team' ? 'badge-reserved' : 'badge-available'}`}>{g.match_type === 'team' ? 'Team' : 'Single'}</span></td>
                   <td className="p-3 text-gray-400 text-xs">{g.duration_minutes ? `${Math.floor(g.duration_minutes / 60)}h ${Math.round(g.duration_minutes % 60)}m` : '—'}</td>
                   <td className="p-3 font-medium text-neon">{g.game_count || 0}</td>
-                  <td className="p-3 text-gold font-semibold">₹{(g.total_bill || 0).toFixed(2)}</td>
+                  <td className="p-3 text-gold font-semibold">PKR{(g.total_bill || 0).toFixed(2)}</td>
                   <td className="p-3 text-gray-500 text-xs">{new Date(g.start_time).toLocaleDateString()}</td>
                 </tr>
               ))}
@@ -68,3 +68,6 @@ export default function Matches({ onRefresh }) {
     </motion.div>
   );
 }
+
+
+

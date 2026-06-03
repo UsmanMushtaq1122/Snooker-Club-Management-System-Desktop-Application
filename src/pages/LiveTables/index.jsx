@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+﻿import React, { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { HiOutlineRefresh, HiOutlineCash, HiOutlineCreditCard, HiOutlineReceiptRefund, HiOutlinePrinter, HiOutlineCheckCircle } from 'react-icons/hi';
 import TableCard from '../../components/TableCard';
@@ -330,8 +330,8 @@ function EndGameModal({ session, onEnd, onClose }) {
                                 : `${gp1} vs ${gp2}`}
                             </td>
                             <td className="py-1 text-neon font-semibold">{g.winner}</td>
-                            <td className="py-1 text-right text-gray-400">₹{rate}</td>
-                            <td className="py-1 text-right text-white font-medium">₹{amount.toFixed(2)}</td>
+                            <td className="py-1 text-right text-gray-400">PKR{rate}</td>
+                            <td className="py-1 text-right text-white font-medium">PKR{amount.toFixed(2)}</td>
                           </tr>
                         );
                       })}
@@ -357,8 +357,8 @@ function EndGameModal({ session, onEnd, onClose }) {
                         <tr key={i} className="border-t border-dark-400/30">
                           <td className="py-1 text-gray-300">{o.item_name}</td>
                           <td className="py-1 text-center text-gray-400">×{o.quantity}</td>
-                          <td className="py-1 text-right text-gray-400">₹{o.price?.toFixed(2)}</td>
-                          <td className="py-1 text-right text-white font-medium">₹{(o.total || 0).toFixed(2)}</td>
+                          <td className="py-1 text-right text-gray-400">PKR{o.price?.toFixed(2)}</td>
+                          <td className="py-1 text-right text-white font-medium">PKR{(o.total || 0).toFixed(2)}</td>
                         </tr>
                       ))}
                     </tbody>
@@ -375,32 +375,32 @@ function EndGameModal({ session, onEnd, onClose }) {
                     const amount = g.amount || (rate * (isTeamGame ? 2 : 1));
                     return (
                       <div key={g.id} className="flex justify-between text-xs">
-                        <span className="text-gray-400">Game #{g.game_number} ({isTeamGame ? 'Team' : 'Single'}, ₹{rate} × {isTeamGame ? '2' : '1'})</span>
-                        <span className="text-white font-medium">₹{amount.toFixed(2)}</span>
+                        <span className="text-gray-400">Game #{g.game_number} ({isTeamGame ? 'Team' : 'Single'}, PKR{rate} × {isTeamGame ? '2' : '1'})</span>
+                        <span className="text-white font-medium">PKR{amount.toFixed(2)}</span>
                       </div>
                     );
                   })}
                   <div className="flex justify-between text-sm border-t border-dark-400/30 pt-1 mt-1">
                     <span className="text-gray-400">Total Table Charges</span>
-                    <span className="text-white font-medium">₹{(bill.table_bill || 0).toFixed(2)}</span>
+                    <span className="text-white font-medium">PKR{(bill.table_bill || 0).toFixed(2)}</span>
                   </div>
                   {(bill.canteen_bill || 0) > 0 && (
                     <div className="flex justify-between text-sm">
                       <span className="text-gray-400">Canteen Charges ({orders.length} items)</span>
-                      <span className="text-gold font-medium">₹{(bill.canteen_bill || 0).toFixed(2)}</span>
+                      <span className="text-gold font-medium">PKR{(bill.canteen_bill || 0).toFixed(2)}</span>
                     </div>
                   )}
-                  <div className="flex justify-between text-sm"><span className="text-gray-400">Subtotal</span><span className="text-white font-medium">₹{subtotal.toFixed(2)}</span></div>
+                  <div className="flex justify-between text-sm"><span className="text-gray-400">Subtotal</span><span className="text-white font-medium">PKR{subtotal.toFixed(2)}</span></div>
                   {discount > 0 && (
                     <div className="flex justify-between text-sm">
-                      <span className="text-gray-400">Discount ({discountType === 'percentage' ? `${discount}%` : `₹${discount}`})</span>
-                      <span className="text-red-400 font-medium">-₹{discountAmount.toFixed(2)}</span>
+                      <span className="text-gray-400">Discount ({discountType === 'percentage' ? `${discount}%` : `PKR${discount}`})</span>
+                      <span className="text-red-400 font-medium">-PKR{discountAmount.toFixed(2)}</span>
                     </div>
                   )}
                   <div className="border-t border-dark-300 pt-1.5 mt-1.5">
                     <div className="flex justify-between text-base">
                       <span className="text-white font-bold">Grand Total</span>
-                      <span className="text-neon font-bold">₹{grandTotal.toFixed(2)}</span>
+                      <span className="text-neon font-bold">PKR{grandTotal.toFixed(2)}</span>
                     </div>
                   </div>
                 </div>
@@ -453,26 +453,26 @@ function EndGameModal({ session, onEnd, onClose }) {
                   <button onClick={() => { setDiscountType('percentage'); setDiscount(0); }}
                     className={`px-2.5 py-1 rounded-lg text-[10px] font-medium transition-all ${discountType === 'percentage' ? 'bg-neon/10 text-neon border border-neon/20' : 'text-gray-500 border border-transparent'}`}>%</button>
                   <button onClick={() => { setDiscountType('fixed'); setDiscount(0); }}
-                    className={`px-2.5 py-1 rounded-lg text-[10px] font-medium transition-all ${discountType === 'fixed' ? 'bg-neon/10 text-neon border border-neon/20' : 'text-gray-500 border border-transparent'}`}>₹</button>
+                    className={`px-2.5 py-1 rounded-lg text-[10px] font-medium transition-all ${discountType === 'fixed' ? 'bg-neon/10 text-neon border border-neon/20' : 'text-gray-500 border border-transparent'}`}>PKR</button>
                 </div>
                 <div className="relative">
-                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-xs">{discountType === 'percentage' ? '%' : '₹'}</span>
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-xs">{discountType === 'percentage' ? '%' : 'PKR'}</span>
                   <input type="number" min="0" max={discountType === 'percentage' ? 100 : subtotal} value={discount}
                     onChange={e => setDiscount(parseFloat(e.target.value) || 0)} className="input-field pl-7" disabled={paid} />
                 </div>
               </div>
 
               <div className="border-t border-dark-300 pt-3 space-y-1.5 text-xs">
-                <div className="flex justify-between"><span className="text-gray-400">Subtotal</span><span className="text-white">₹{subtotal.toFixed(2)}</span></div>
-                {discount > 0 && <div className="flex justify-between"><span className="text-gray-400">Discount</span><span className="text-red-400">-₹{discountAmount.toFixed(2)}</span></div>}
-                <div className="border-t border-dark-300 pt-1.5"><div className="flex justify-between text-sm"><span className="text-white font-bold">Total</span><span className="text-neon font-bold">₹{grandTotal.toFixed(2)}</span></div></div>
+                <div className="flex justify-between"><span className="text-gray-400">Subtotal</span><span className="text-white">PKR{subtotal.toFixed(2)}</span></div>
+                {discount > 0 && <div className="flex justify-between"><span className="text-gray-400">Discount</span><span className="text-red-400">-PKR{discountAmount.toFixed(2)}</span></div>}
+                <div className="border-t border-dark-300 pt-1.5"><div className="flex justify-between text-sm"><span className="text-white font-bold">Total</span><span className="text-neon font-bold">PKR{grandTotal.toFixed(2)}</span></div></div>
               </div>
 
               {!paid ? (
                 <button onClick={handleComplete}
                   className="w-full py-3 rounded-xl bg-neon text-white font-semibold text-sm hover:bg-neon-600 shadow-neon transition-all active:scale-[0.98] flex items-center justify-center gap-2">
                   <HiOutlineCheckCircle className="text-lg" />
-                  Complete — ₹{grandTotal.toFixed(2)}
+                  Complete — PKR{grandTotal.toFixed(2)}
                 </button>
               ) : (
                 <div className="glass-card p-3 text-center border-neon/30">
@@ -544,12 +544,12 @@ function generateInvoiceHtml(session, orders, games, perGamePrice, paymentMethod
       const isTeamGame = !!(g.player3 || g.player4);
       const rate = g.rate || perGamePrice || 120;
       const amount = g.amount || (rate * (isTeamGame ? 2 : 1));
-      return `<tr><td style="padding:2px 4px">#${g.game_number}</td><td style="padding:2px 4px">${isTeamGame ? 'Team' : 'Single'}</td><td style="padding:2px 4px"><span style="color:#22C55E">${g.winner}</span></td><td style="padding:2px 4px;text-align:right">₹${rate}</td><td style="padding:2px 4px;text-align:right;font-weight:bold">₹${amount.toFixed(2)}</td></tr>`;
+      return `<tr><td style="padding:2px 4px">#${g.game_number}</td><td style="padding:2px 4px">${isTeamGame ? 'Team' : 'Single'}</td><td style="padding:2px 4px"><span style="color:#22C55E">${g.winner}</span></td><td style="padding:2px 4px;text-align:right">PKR${rate}</td><td style="padding:2px 4px;text-align:right;font-weight:bold">PKR${amount.toFixed(2)}</td></tr>`;
     }).join('');
   }
   let ordersHtml = '';
   if (orders?.length > 0) {
-    ordersHtml = orders.map(o => `<tr><td style="padding:2px 4px">${o.item_name} x${o.quantity}</td><td style="padding:2px 4px;text-align:right">₹${o.total?.toFixed(2)}</td></tr>`).join('');
+    ordersHtml = orders.map(o => `<tr><td style="padding:2px 4px">${o.item_name} x${o.quantity}</td><td style="padding:2px 4px;text-align:right">PKR${o.total?.toFixed(2)}</td></tr>`).join('');
   }
 
   return `<!DOCTYPE html><html><head><meta charset="utf-8"><style>
@@ -585,13 +585,13 @@ function generateInvoiceHtml(session, orders, games, perGamePrice, paymentMethod
       const isTeamGame = !!(g.player3 || g.player4);
       const rate = g.rate || perGamePrice || 120;
       const amount = g.amount || (rate * (isTeamGame ? 2 : 1));
-      return `<tr><td style="color:#888;font-size:9px">Game #${g.game_number} (${isTeamGame ? 'Team' : 'Single'}, ₹${rate} × ${isTeamGame ? '2' : '1'})</td><td style="text-align:right;font-size:9px">₹${amount.toFixed(2)}</td></tr>`;
+      return `<tr><td style="color:#888;font-size:9px">Game #${g.game_number} (${isTeamGame ? 'Team' : 'Single'}, PKR${rate} × ${isTeamGame ? '2' : '1'})</td><td style="text-align:right;font-size:9px">PKR${amount.toFixed(2)}</td></tr>`;
     }).join('') : ''}
-    <tr><td style="color:#666;font-weight:bold">Total Table Charges</td><td style="text-align:right;font-weight:bold">₹${(session?.table_bill || 0).toFixed(2)}</td></tr>
-    ${(session?.canteen_bill || 0) > 0 ? `<tr><td style="color:#666">Canteen Charges</td><td style="text-align:right">₹${(session?.canteen_bill || 0).toFixed(2)}</td></tr>` : ''}
-      <tr><td style="color:#666">Subtotal</td><td style="text-align:right">₹${subtotal.toFixed(2)}</td></tr>
-      ${discountAmount > 0 ? `<tr><td style="color:#EF4444">Discount</td><td style="text-align:right;color:#EF4444">-₹${discountAmount.toFixed(2)}</td></tr>` : ''}
-      <tr><td style="font-size:14px;font-weight:bold">GRAND TOTAL</td><td style="text-align:right;font-size:14px;font-weight:bold;color:#22C55E">₹${grandTotal.toFixed(2)}</td></tr>
+    <tr><td style="color:#666;font-weight:bold">Total Table Charges</td><td style="text-align:right;font-weight:bold">PKR${(session?.table_bill || 0).toFixed(2)}</td></tr>
+    ${(session?.canteen_bill || 0) > 0 ? `<tr><td style="color:#666">Canteen Charges</td><td style="text-align:right">PKR${(session?.canteen_bill || 0).toFixed(2)}</td></tr>` : ''}
+      <tr><td style="color:#666">Subtotal</td><td style="text-align:right">PKR${subtotal.toFixed(2)}</td></tr>
+      ${discountAmount > 0 ? `<tr><td style="color:#EF4444">Discount</td><td style="text-align:right;color:#EF4444">-PKR${discountAmount.toFixed(2)}</td></tr>` : ''}
+      <tr><td style="font-size:14px;font-weight:bold">GRAND TOTAL</td><td style="text-align:right;font-size:14px;font-weight:bold;color:#22C55E">PKR${grandTotal.toFixed(2)}</td></tr>
     </table>
     ${paymentMethod ? `<div style="text-align:center;margin:8px 0;font-size:9px;color:#666">Payment: <strong>${(paymentLabels[paymentMethod] || paymentMethod).toUpperCase()}</strong></div>` : ''}
     <div style="text-align:center;margin:8px 0"><span class="paid-stamp">PAID</span></div>
@@ -601,3 +601,6 @@ function generateInvoiceHtml(session, orders, games, perGamePrice, paymentMethod
     <p class="footer" style="font-size:8px">${new Date().toLocaleString()}</p>
   </body></html>`;
 }
+
+
+

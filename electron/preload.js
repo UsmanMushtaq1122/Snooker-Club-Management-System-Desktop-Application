@@ -30,4 +30,22 @@ contextBridge.exposeInMainWorld('api', {
   completeTableOrder: (tableNumber) => ipcRenderer.invoke('db:complete-table-order', tableNumber),
   updateInvoicePayment: (invoiceId, paymentMethod, discount, discountType, notes) => ipcRenderer.invoke('db:update-invoice-payment', invoiceId, paymentMethod, discount, discountType, notes),
   printBill: (htmlContent) => ipcRenderer.invoke('print:bill', htmlContent),
+
+  getStaff: () => ipcRenderer.invoke('db:get-staff'),
+  getStaffMember: (id) => ipcRenderer.invoke('db:get-staff-member', id),
+  addStaff: (name, role, username, password, phone, email, salary) => ipcRenderer.invoke('db:add-staff', name, role, username, password, phone, email, salary),
+  updateStaff: (id, name, role, username, password, phone, email, salary, status) => ipcRenderer.invoke('db:update-staff', id, name, role, username, password, phone, email, salary, status),
+  deleteStaff: (id) => ipcRenderer.invoke('db:delete-staff', id),
+  staffLogin: (staffId) => ipcRenderer.invoke('db:staff-login', staffId),
+  staffLogout: (sessionId) => ipcRenderer.invoke('db:staff-logout', sessionId),
+  getStaffSessions: () => ipcRenderer.invoke('db:get-staff-sessions'),
+  getShiftReports: (staffId) => ipcRenderer.invoke('db:get-shift-reports', staffId),
+  addShiftReport: (staffId, date, clockIn, clockOut, notes) => ipcRenderer.invoke('db:add-shift-report', staffId, date, clockIn, clockOut, notes),
+  getPerformanceReports: (staffId) => ipcRenderer.invoke('db:get-performance-reports', staffId),
+  addPerformanceReport: (staffId, reviewDate, rating, notes) => ipcRenderer.invoke('db:add-performance-report', staffId, reviewDate, rating, notes),
+
+  getMembershipPlans: () => ipcRenderer.invoke('db:get-membership-plans'),
+  addMembershipPlan: (name, durationDays, price, benefits) => ipcRenderer.invoke('db:add-membership-plan', name, durationDays, price, benefits),
+  updateMembershipPlan: (id, name, durationDays, price, benefits, status) => ipcRenderer.invoke('db:update-membership-plan', id, name, durationDays, price, benefits, status),
+  deleteMembershipPlan: (id) => ipcRenderer.invoke('db:delete-membership-plan', id),
 });

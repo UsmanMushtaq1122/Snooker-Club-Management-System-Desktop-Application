@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 const MENU_ITEMS = [
@@ -60,7 +60,7 @@ export default function CanteenModal({ session, onAdd, onClose }) {
             >
               <span className="text-lg block mb-1">{item.icon}</span>
               <p className="text-xs font-medium text-gray-200">{item.name}</p>
-              <p className="text-[10px] text-neon font-semibold">₹{item.price}</p>
+              <p className="text-[10px] text-neon font-semibold">PKR{item.price}</p>
               <div className="flex items-center gap-1 mt-1.5">
                 <input
                   type="number" min="0" max="99"
@@ -82,7 +82,7 @@ export default function CanteenModal({ session, onAdd, onClose }) {
           <div className="border-t border-dark-300/50 pt-3">
             <div className="flex items-center justify-between mb-2">
               <h3 className="text-xs font-semibold text-gradient">Current Orders</h3>
-              <span className="text-xs text-neon font-semibold">₹{totalOrders.toFixed(2)}</span>
+              <span className="text-xs text-neon font-semibold">PKR{totalOrders.toFixed(2)}</span>
             </div>
             <div className="space-y-1">
               {orders.map((order, idx) => (
@@ -96,8 +96,8 @@ export default function CanteenModal({ session, onAdd, onClose }) {
                   <span className="text-gray-200 font-medium">{order.item_name}</span>
                   <div className="flex items-center gap-3">
                     <span className="text-gray-500">×{order.quantity}</span>
-                    <span className="text-gray-400">₹{order.price.toFixed(2)}</span>
-                    <span className="text-white font-semibold w-16 text-right">₹{order.total.toFixed(2)}</span>
+                    <span className="text-gray-400">PKR{order.price.toFixed(2)}</span>
+                    <span className="text-white font-semibold w-16 text-right">PKR{order.total.toFixed(2)}</span>
                   </div>
                 </motion.div>
               ))}
@@ -112,3 +112,6 @@ export default function CanteenModal({ session, onAdd, onClose }) {
     </div>
   );
 }
+
+
+

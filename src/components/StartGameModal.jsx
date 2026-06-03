@@ -81,3 +81,5 @@ export default function StartGameModal({ tableNumber, onStart, onClose }) {
     </div>
   );
 }
+
+

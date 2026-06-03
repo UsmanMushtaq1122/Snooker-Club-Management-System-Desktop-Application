@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { HiOutlinePlus, HiOutlinePencil, HiOutlineXCircle } from 'react-icons/hi';
 
@@ -41,7 +41,7 @@ export default function TableManagement({ onRefresh }) {
                 <tr key={t.table_number} className="border-b border-dark-300/50 hover:bg-dark-300/30">
                   <td className="p-3 font-medium text-white">Table {t.table_number}</td>
                   <td className="p-3"><span className={`badge ${statusColors[t.status] || 'badge-available'}`}>{t.status}</span></td>
-                  <td className="p-3 text-neon font-semibold">₹{t.price_per_hour || 120}</td>
+                  <td className="p-3 text-neon font-semibold">PKR{t.price_per_hour || 120}</td>
                   <td className="p-3">
                     <div className="flex items-center gap-1">
                       <button className="p-1.5 rounded-lg hover:bg-dark-300 text-gray-400 hover:text-white transition-colors"><HiOutlinePencil /></button>
@@ -57,3 +57,6 @@ export default function TableManagement({ onRefresh }) {
     </motion.div>
   );
 }
+
+
+

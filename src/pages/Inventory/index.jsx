@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { HiOutlineSearch, HiOutlineCube, HiOutlineExclamationCircle } from 'react-icons/hi';
 
@@ -41,7 +41,7 @@ export default function Inventory({ onRefresh }) {
               {item.stock <= item.min && <HiOutlineExclamationCircle className="text-red-400 text-lg" />}
             </div>
             <p className={`text-xl font-bold ${item.stock <= item.min ? 'text-red-400' : 'text-neon'}`}>{item.stock}</p>
-            <p className="text-xs text-gray-500 mt-1">Min: {item.min} — ₹{item.price}/{item.unit}</p>
+            <p className="text-xs text-gray-500 mt-1">Min: {item.min} — PKR{item.price}/{item.unit}</p>
             <div className="mt-2 h-1.5 rounded-full bg-dark-300 overflow-hidden">
               <div className={`h-full rounded-full transition-all ${item.stock <= item.min ? 'bg-red-400' : 'bg-neon'}`}
                 style={{ width: `${Math.min(100, (item.stock / item.min) * 100)}%` }} />
@@ -52,3 +52,6 @@ export default function Inventory({ onRefresh }) {
     </motion.div>
   );
 }
+
+
+

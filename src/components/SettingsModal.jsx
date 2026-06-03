@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 const DEFAULT_PRICES = { 1: 200, 2: 150, 3: 150 };
@@ -40,7 +40,7 @@ export default function SettingsModal({ onClose, onSave }) {
         </div>
         <div className="space-y-4">
           <div>
-            <label className="text-xs text-gray-500 uppercase tracking-wider mb-2 block">Table Rates (₹)</label>
+            <label className="text-xs text-gray-500 uppercase tracking-wider mb-2 block">Table Rates (PKR)</label>
             <div className="grid grid-cols-5 gap-2">
               {[1,2,3,4,5,6,7,8,9,10].map(num => (
                 <div key={num} className="p-2 rounded-lg bg-dark-300/50 text-center">
@@ -68,3 +68,6 @@ export default function SettingsModal({ onClose, onSave }) {
     </div>
   );
 }
+
+
+

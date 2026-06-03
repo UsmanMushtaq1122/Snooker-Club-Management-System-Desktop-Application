@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { HiOutlineSearch, HiOutlineShoppingBag, HiOutlineX, HiOutlineMinus, HiOutlinePlus, HiOutlinePrinter } from 'react-icons/hi';
 
@@ -100,7 +100,7 @@ export default function CanteenPOS({ onRefresh }) {
                   >
                     <span className="text-lg block mb-1">{item.icon}</span>
                     <p className="text-xs font-medium text-gray-200">{item.name}</p>
-                    <p className="text-xs text-neon font-semibold mt-0.5">₹{item.price}</p>
+                    <p className="text-xs text-neon font-semibold mt-0.5">PKR{item.price}</p>
                   </motion.button>
                 ))}
               </div>
@@ -133,7 +133,7 @@ export default function CanteenPOS({ onRefresh }) {
                 >
                   <div>
                     <p className="text-xs font-medium text-gray-200">{item.icon} {name}</p>
-                    <p className="text-[10px] text-gray-500">₹{item.price} × {item.qty} = ₹{(item.price * item.qty).toFixed(2)}</p>
+                    <p className="text-[10px] text-gray-500">PKR{item.price} × {item.qty} = PKR{(item.price * item.qty).toFixed(2)}</p>
                   </div>
                   <div className="flex items-center gap-1">
                     <button onClick={() => updateQty(name, -1)} className="w-6 h-6 flex items-center justify-center rounded-lg bg-dark-400 text-gray-400 hover:text-white transition-colors text-xs">−</button>
@@ -155,7 +155,7 @@ export default function CanteenPOS({ onRefresh }) {
             <div className="mt-3 pt-3 border-t border-dark-300 space-y-2">
               <div className="flex justify-between text-sm">
                 <span className="text-gray-400">Total</span>
-                <span className="text-white font-bold">₹{cartTotal.toFixed(2)}</span>
+                <span className="text-white font-bold">PKR{cartTotal.toFixed(2)}</span>
               </div>
               <div className="flex gap-2">
                 <button className="btn-ghost flex-1 text-xs flex items-center justify-center gap-1"><HiOutlinePrinter /> Kitchen</button>
@@ -168,3 +168,6 @@ export default function CanteenPOS({ onRefresh }) {
     </motion.div>
   );
 }
+
+
+

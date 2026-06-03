@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+﻿import React, { useState, useEffect, useCallback, useRef } from 'react';
 import TableCard from './TableCard';
 import StartGameModal from './StartGameModal';
 import StartNextGameModal from './StartNextGameModal';
@@ -300,11 +300,11 @@ function EndGameModal({ session, onEnd, onClose }) {
                 </div>
                 <div className="receipt-row">
                   <span>Per Game {bill.match_type === 'team' ? '(×2 Team)' : ''}</span>
-                  <span>₹{bill.per_game_price}</span>
+                  <span>PKR{bill.per_game_price}</span>
                 </div>
                 <div className="receipt-row receipt-total">
-                  <span>Table Bill ({bill.game_count} × ₹{bill.per_game_price})</span>
-                  <span>₹{bill.table_bill.toFixed(2)}</span>
+                  <span>Table Bill ({bill.game_count} × PKR{bill.per_game_price})</span>
+                  <span>PKR{bill.table_bill.toFixed(2)}</span>
                 </div>
               </div>
               {bill.orders && bill.orders.length > 0 && (
@@ -315,12 +315,12 @@ function EndGameModal({ session, onEnd, onClose }) {
                     {bill.orders.map((order, i) => (
                       <div className="receipt-row" key={i}>
                         <span>{order.item_name} x{order.quantity}</span>
-                        <span>₹{order.total.toFixed(2)}</span>
+                        <span>PKR{order.total.toFixed(2)}</span>
                       </div>
                     ))}
                     <div className="receipt-row receipt-total">
                       <span>Canteen Bill</span>
-                      <span>₹{bill.canteen_bill.toFixed(2)}</span>
+                      <span>PKR{bill.canteen_bill.toFixed(2)}</span>
                     </div>
                   </div>
                 </>
@@ -329,7 +329,7 @@ function EndGameModal({ session, onEnd, onClose }) {
               <div className="receipt-grand-total">
                 <div className="receipt-row">
                   <span style={{ fontSize: 18, fontWeight: 800 }}>TOTAL</span>
-                  <span style={{ fontSize: 18, fontWeight: 800 }}>₹{bill.total_bill.toFixed(2)}</span>
+                  <span style={{ fontSize: 18, fontWeight: 800 }}>PKR{bill.total_bill.toFixed(2)}</span>
                 </div>
               </div>
               <div className="receipt-footer">
@@ -424,3 +424,6 @@ function EndGameModal({ session, onEnd, onClose }) {
     </div>
   );
 }
+
+
+

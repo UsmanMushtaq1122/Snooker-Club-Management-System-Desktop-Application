@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { HiOutlinePlay, HiOutlineFilter, HiOutlineSearch } from 'react-icons/hi';
 
@@ -75,7 +75,7 @@ export default function Sessions({ onRefresh }) {
                   <td className="p-3 text-gray-400 text-xs">{new Date(s.start_time).toLocaleString()}</td>
                   <td className="p-3 text-gray-400 text-xs">{s.end_time ? new Date(s.end_time).toLocaleString() : '—'}</td>
                   <td className="p-3 text-gray-300 font-medium">{s.game_count || 0}</td>
-                  <td className="p-3 text-neon font-semibold">₹{(s.total_bill || 0).toFixed(2)}</td>
+                  <td className="p-3 text-neon font-semibold">PKR{(s.total_bill || 0).toFixed(2)}</td>
                   <td className="p-3">
                     <span className={`badge ${s.status === 'running' ? 'badge-running' : s.status === 'completed' ? 'badge-completed' : 'badge-available'}`}>
                       {s.status}
@@ -93,3 +93,6 @@ export default function Sessions({ onRefresh }) {
     </motion.div>
   );
 }
+
+
+

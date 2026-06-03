@@ -66,6 +66,23 @@ function registerIpcHandlers() {
   ipcMain.handle('db:complete-table-order', (_, tableNumber) => db.completeTableOrder(tableNumber));
   ipcMain.handle('db:update-invoice-payment', (_, invoiceId, paymentMethod, discount, discountType, notes) => db.updateInvoicePayment(invoiceId, paymentMethod, discount, discountType, notes));
 
+  ipcMain.handle('db:get-staff', () => db.getStaff());
+  ipcMain.handle('db:get-staff-member', (_, id) => db.getStaffMember(id));
+  ipcMain.handle('db:add-staff', (_, name, role, username, password, phone, email, salary) => db.addStaff(name, role, username, password, phone, email, salary));
+  ipcMain.handle('db:update-staff', (_, id, name, role, username, password, phone, email, salary, status) => db.updateStaff(id, name, role, username, password, phone, email, salary, status));
+  ipcMain.handle('db:delete-staff', (_, id) => db.deleteStaff(id));
+  ipcMain.handle('db:staff-login', (_, staffId) => db.staffLogin(staffId));
+  ipcMain.handle('db:staff-logout', (_, sessionId) => db.staffLogout(sessionId));
+  ipcMain.handle('db:get-staff-sessions', () => db.getStaffSessions());
+  ipcMain.handle('db:get-shift-reports', (_, staffId) => db.getShiftReports(staffId));
+  ipcMain.handle('db:add-shift-report', (_, staffId, date, clockIn, clockOut, notes) => db.addShiftReport(staffId, date, clockIn, clockOut, notes));
+  ipcMain.handle('db:get-performance-reports', (_, staffId) => db.getPerformanceReports(staffId));
+  ipcMain.handle('db:add-performance-report', (_, staffId, reviewDate, rating, notes) => db.addPerformanceReport(staffId, reviewDate, rating, notes));
+  ipcMain.handle('db:get-membership-plans', () => db.getMembershipPlans());
+  ipcMain.handle('db:add-membership-plan', (_, name, durationDays, price, benefits) => db.addMembershipPlan(name, durationDays, price, benefits));
+  ipcMain.handle('db:update-membership-plan', (_, id, name, durationDays, price, benefits, status) => db.updateMembershipPlan(id, name, durationDays, price, benefits, status));
+  ipcMain.handle('db:delete-membership-plan', (_, id) => db.deleteMembershipPlan(id));
+
   ipcMain.handle('print:bill', (_, htmlContent) => {
     const win = new BrowserWindow({
       width: 400,

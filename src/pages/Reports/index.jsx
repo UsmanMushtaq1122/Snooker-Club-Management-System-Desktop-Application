@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from 'recharts';
 import { HiOutlineDownload, HiOutlineFilter } from 'react-icons/hi';
@@ -34,9 +34,9 @@ export default function Reports({ onRefresh }) {
   }));
 
   const tableStats = [
-    { label: 'Total Revenue', value: dailyReport ? `₹${dailyReport.totalRevenue.toFixed(2)}` : '—', color: 'text-neon' },
-    { label: 'Table Revenue', value: dailyReport ? `₹${dailyReport.tableRevenue.toFixed(2)}` : '—', color: 'text-blue-400' },
-    { label: 'Canteen Revenue', value: dailyReport ? `₹${dailyReport.canteenRevenue.toFixed(2)}` : '—', color: 'text-gold' },
+    { label: 'Total Revenue', value: dailyReport ? `PKR${dailyReport.totalRevenue.toFixed(2)}` : '—', color: 'text-neon' },
+    { label: 'Table Revenue', value: dailyReport ? `PKR${dailyReport.tableRevenue.toFixed(2)}` : '—', color: 'text-blue-400' },
+    { label: 'Canteen Revenue', value: dailyReport ? `PKR${dailyReport.canteenRevenue.toFixed(2)}` : '—', color: 'text-gold' },
     { label: 'Sessions', value: dailyReport?.sessions?.length || 0, color: 'text-white' },
   ];
 
@@ -118,9 +118,9 @@ export default function Reports({ onRefresh }) {
                         <td className="p-3 text-gray-300 text-xs">{s.match_type === 'team' ? `${s.player1} & ${s.player2} vs ${s.player3} & ${s.player4}` : `${s.player1} vs ${s.player2}`}</td>
                         <td className="p-3 text-gray-400 text-xs">{Math.floor(s.duration_minutes / 60)}h {Math.round(s.duration_minutes % 60)}m</td>
                         <td className="p-3 text-gray-300">{s.game_count || 0}</td>
-                        <td className="p-3 text-neon">₹{(s.table_bill || 0).toFixed(2)}</td>
-                        <td className="p-3 text-gold">₹{(s.canteen_bill || 0).toFixed(2)}</td>
-                        <td className="p-3 font-semibold text-white">₹{(s.total_bill || 0).toFixed(2)}</td>
+                        <td className="p-3 text-neon">PKR{(s.table_bill || 0).toFixed(2)}</td>
+                        <td className="p-3 text-gold">PKR{(s.canteen_bill || 0).toFixed(2)}</td>
+                        <td className="p-3 font-semibold text-white">PKR{(s.total_bill || 0).toFixed(2)}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -138,7 +138,7 @@ export default function Reports({ onRefresh }) {
               <p className="text-xs text-gray-500 uppercase mb-1">Table {t.table_number}</p>
               <p className="text-2xl font-bold text-white">{t.total_games || 0}</p>
               <p className="text-xs text-gray-500 mt-1">{Math.floor((t.total_minutes || 0) / 60)}h {Math.round((t.total_minutes || 0) % 60)}m</p>
-              <p className="text-sm font-semibold text-neon mt-1">₹{(t.total_revenue || 0).toFixed(2)}</p>
+              <p className="text-sm font-semibold text-neon mt-1">PKR{(t.total_revenue || 0).toFixed(2)}</p>
             </motion.div>
           ))}
         </div>
@@ -194,7 +194,7 @@ export default function Reports({ onRefresh }) {
                   <tr key={i} className="border-b border-dark-300/50 hover:bg-dark-300/30">
                     <td className="p-3 text-white font-medium">{item.item_name}</td>
                     <td className="p-3 text-gray-300">{item.quantity}</td>
-                    <td className="p-3 text-gold font-semibold">₹{item.total.toFixed(2)}</td>
+                    <td className="p-3 text-gold font-semibold">PKR{item.total.toFixed(2)}</td>
                   </tr>
                 ))}
               </tbody>
@@ -208,3 +208,6 @@ export default function Reports({ onRefresh }) {
     </motion.div>
   );
 }
+
+
+

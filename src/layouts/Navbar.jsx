@@ -22,15 +22,6 @@ export default function Navbar({ theme, onToggleTheme, activeTables }) {
     >
       <div className="absolute inset-x-6 -bottom-px h-px bg-gradient-to-r from-transparent via-dark-400/50 to-transparent" />
       <div className="flex items-center gap-5">
-        <div className="flex items-center gap-2.5 pr-3 border-r border-dark-400/40">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-neon to-emerald-500 flex items-center justify-center shadow-neon-sm">
-            <span className="text-sm">🎱</span>
-          </div>
-          <div className="hidden xl:block">
-            <h1 className="text-xs font-bold text-white leading-tight">Snooker Club</h1>
-            <p className="text-[9px] text-gray-600 tracking-wider uppercase leading-tight">Management</p>
-          </div>
-        </div>
         <motion.div
           animate={{ width: searchFocused ? 340 : 240 }}
           className={cn(
@@ -103,3 +94,5 @@ export default function Navbar({ theme, onToggleTheme, activeTables }) {
 function cn(...classes) {
   return classes.filter(Boolean).join(' ');
 }
+
+

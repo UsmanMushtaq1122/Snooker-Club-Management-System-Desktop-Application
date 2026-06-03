@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+﻿import React, { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { HiOutlineCash, HiOutlineTable, HiOutlinePlay, HiOutlineStar, HiOutlineShoppingBag, HiOutlineTrendingUp, HiOutlineClock, HiOutlineExclamationCircle } from 'react-icons/hi';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, AreaChart, Area, PieChart, Pie, Cell, Legend } from 'recharts';
@@ -131,10 +131,10 @@ export default function Dashboard({ sessions, onRefresh }) {
       </div>
 
       <motion.div variants={itemVariants} className="grid grid-cols-4 gap-4">
-        <StatCard icon={HiOutlineCash} label="Revenue Today" value={`₹${stats.revenueToday.toFixed(2)}`} sub="+12.5% vs yesterday" accent="neon" />
+        <StatCard icon={HiOutlineCash} label="Revenue Today" value={`PKR${stats.revenueToday.toFixed(2)}`} sub="+12.5% vs yesterday" accent="neon" />
         <StatCard icon={HiOutlineTable} label="Active Tables" value={stats.activeTables} sub={`${10 - stats.activeTables} available`} accent="blue" />
-        <StatCard icon={HiOutlineShoppingBag} label="Canteen Sales" value={`₹${stats.canteenSales.toFixed(2)}`} sub="Today's total" accent="gold" />
-        <StatCard icon={HiOutlineTrendingUp} label="Monthly Revenue" value={`₹${stats.monthlyRevenue.toFixed(2)}`} sub="This month" accent="neon" />
+        <StatCard icon={HiOutlineShoppingBag} label="Canteen Sales" value={`PKR${stats.canteenSales.toFixed(2)}`} sub="Today's total" accent="gold" />
+        <StatCard icon={HiOutlineTrendingUp} label="Monthly Revenue" value={`PKR${stats.monthlyRevenue.toFixed(2)}`} sub="This month" accent="neon" />
       </motion.div>
 
       <div className="grid grid-cols-3 gap-6">
@@ -258,7 +258,7 @@ export default function Dashboard({ sessions, onRefresh }) {
                     <p className="text-[10px] text-gray-500">{s.player1} vs {s.player2}</p>
                   </div>
                 </div>
-                <span className="text-xs font-semibold text-neon">₹{s.total_bill?.toFixed(2)}</span>
+                <span className="text-xs font-semibold text-neon">PKR{s.total_bill?.toFixed(2)}</span>
               </div>
             ))}
             {recentSessions.length === 0 && (
@@ -282,7 +282,7 @@ export default function Dashboard({ sessions, onRefresh }) {
                   </div>
                 </div>
                 <div className="text-right">
-                  <span className="text-xs font-semibold text-gold">₹{s.total_bill?.toFixed(2)}</span>
+                  <span className="text-xs font-semibold text-gold">PKR{s.total_bill?.toFixed(2)}</span>
                   <p className="text-[10px] text-gray-600 mt-0.5">{s.game_count || 0} games</p>
                 </div>
               </div>
@@ -316,3 +316,6 @@ export default function Dashboard({ sessions, onRefresh }) {
     </motion.div>
   );
 }
+
+
+

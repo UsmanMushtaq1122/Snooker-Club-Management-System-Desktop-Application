@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+﻿import React, { useRef, useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 export default function BillReceipt({ data, onClose }) {
@@ -54,7 +54,7 @@ export default function BillReceipt({ data, onClose }) {
                 return (
                   <div key={g.id} className="flex justify-between text-[10px] py-0.5">
                     <span className="text-gray-500">#{g.game_number} ({isTeamGame ? 'Team' : 'Single'})</span>
-                    <span className="text-white">₹{amount.toFixed(2)}</span>
+                    <span className="text-white">PKR{amount.toFixed(2)}</span>
                   </div>
                 );
               })}
@@ -62,7 +62,7 @@ export default function BillReceipt({ data, onClose }) {
             </>
           )}
           <div className="space-y-1">
-            <div className="flex justify-between font-semibold"><span className="text-white">Table Bill</span><span className="text-neon">₹{(session.table_bill || 0).toFixed(2)}</span></div>
+            <div className="flex justify-between font-semibold"><span className="text-white">Table Bill</span><span className="text-neon">PKR{(session.table_bill || 0).toFixed(2)}</span></div>
           </div>
           {orders?.length > 0 && (
             <>
@@ -71,19 +71,19 @@ export default function BillReceipt({ data, onClose }) {
               {orders.map((o, i) => (
                 <div key={i} className="flex justify-between text-[10px] py-0.5">
                   <span className="text-gray-500">{o.item_name} x{o.quantity}</span>
-                  <span className="text-white">₹{o.total.toFixed(2)}</span>
+                  <span className="text-white">PKR{o.total.toFixed(2)}</span>
                 </div>
               ))}
               <div className="flex justify-between font-semibold mt-1">
                 <span className="text-white">Canteen Total</span>
-                <span className="text-gold">₹{(session.canteen_bill || 0).toFixed(2)}</span>
+                <span className="text-gold">PKR{(session.canteen_bill || 0).toFixed(2)}</span>
               </div>
             </>
           )}
           <div className="border-t border-dashed border-dark-400 my-2" />
           <div className="flex justify-between text-base py-1">
             <span className="text-white font-bold">TOTAL</span>
-            <span className="text-neon font-bold">₹{(session.total_bill || 0).toFixed(2)}</span>
+            <span className="text-neon font-bold">PKR{(session.total_bill || 0).toFixed(2)}</span>
           </div>
           <div className="text-center mt-3 text-gray-600 text-[10px]">Thank you for playing!</div>
         </div>
@@ -104,13 +104,13 @@ export function generateReceiptHtml(session, orders, games, perGamePrice) {
       const isTeamGame = !!(g.player3 || g.player4);
       const rate = g.rate || perGamePrice || 120;
       const amount = g.amount || (rate * (isTeamGame ? 2 : 1));
-      return `<tr><td>#${g.game_number} (${isTeamGame ? 'Team' : 'Single'})</td><td style="text-align:right">₹${amount.toFixed(2)}</td></tr>`;
+      return `<tr><td>#${g.game_number} (${isTeamGame ? 'Team' : 'Single'})</td><td style="text-align:right">PKR${amount.toFixed(2)}</td></tr>`;
     }).join('');
   }
   let ordersHtml = '';
   if (orders?.length > 0) {
-    ordersHtml = orders.map(o => `<tr><td>${o.item_name} x${o.quantity}</td><td style="text-align:right">₹${o.total?.toFixed(2)}</td></tr>`).join('');
-    ordersHtml += `<tr style="font-weight:600"><td>Canteen Total</td><td style="text-align:right">₹${session?.canteen_bill?.toFixed(2)}</td></tr>`;
+    ordersHtml = orders.map(o => `<tr><td>${o.item_name} x${o.quantity}</td><td style="text-align:right">PKR${o.total?.toFixed(2)}</td></tr>`).join('');
+    ordersHtml += `<tr style="font-weight:600"><td>Canteen Total</td><td style="text-align:right">PKR${session?.canteen_bill?.toFixed(2)}</td></tr>`;
   }
   return `<!DOCTYPE html><html><head><style>
     body { font-family: 'Courier New', monospace; font-size: 12px; padding: 20px; color: #000; max-width: 320px; margin: 0 auto; }
@@ -133,12 +133,15 @@ export function generateReceiptHtml(session, orders, games, perGamePrice) {
     ${gamesHtml ? `<div class="divider"></div><table>${gamesHtml}</table>` : ''}
     <div class="divider"></div>
     <table>
-      <tr style="font-weight:bold"><td>Table Bill</td><td style="text-align:right">₹${session?.table_bill?.toFixed(2)}</td></tr>
+      <tr style="font-weight:bold"><td>Table Bill</td><td style="text-align:right">PKR${session?.table_bill?.toFixed(2)}</td></tr>
     </table>
     ${ordersHtml ? `<div class="divider"></div><table>${ordersHtml}</table>` : ''}
     <div class="divider"></div>
-    <table><tr class="total"><td>TOTAL</td><td style="text-align:right">₹${session?.total_bill?.toFixed(2)}</td></tr></table>
+    <table><tr class="total"><td>TOTAL</td><td style="text-align:right">PKR${session?.total_bill?.toFixed(2)}</td></tr></table>
     <div class="divider"></div>
     <p class="footer">Thank you for playing!</p>
   </body></html>`;
 }
+
+
+

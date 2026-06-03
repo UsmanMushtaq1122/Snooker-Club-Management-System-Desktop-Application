@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 
 export default function Reports() {
   const [tab, setTab] = useState('daily');
@@ -145,15 +145,15 @@ export default function Reports() {
               <div className="report-cards">
                 <div className="stat-card">
                   <div className="stat-label">Total Revenue</div>
-                  <div className="stat-value accent">₹{dailyReport.totalRevenue.toFixed(2)}</div>
+                  <div className="stat-value accent">PKR{dailyReport.totalRevenue.toFixed(2)}</div>
                 </div>
                 <div className="stat-card">
                   <div className="stat-label">Table Revenue</div>
-                  <div className="stat-value info">₹{dailyReport.tableRevenue.toFixed(2)}</div>
+                  <div className="stat-value info">PKR{dailyReport.tableRevenue.toFixed(2)}</div>
                 </div>
                 <div className="stat-card">
                   <div className="stat-label">Canteen Revenue</div>
-                  <div className="stat-value warning">₹{dailyReport.canteenRevenue.toFixed(2)}</div>
+                  <div className="stat-value warning">PKR{dailyReport.canteenRevenue.toFixed(2)}</div>
                 </div>
                 <div className="stat-card">
                   <div className="stat-label">Sessions</div>
@@ -177,7 +177,7 @@ export default function Reports() {
                       <tr key={i}>
                         <td>{item.item_name}</td>
                         <td>{item.quantity}</td>
-                        <td>₹{item.total.toFixed(2)}</td>
+                        <td>PKR{item.total.toFixed(2)}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -202,7 +202,7 @@ export default function Reports() {
                         <td>#{s.table_number}</td>
                       <td>{s.match_type === 'team' ? `${s.player1} & ${s.player2} vs ${s.player3} & ${s.player4}` : `${s.player1} vs ${s.player2}`}</td>
                         <td>{Math.floor(s.duration_minutes / 60)}h {Math.round(s.duration_minutes % 60)}m</td>
-                        <td>₹{s.total_bill.toFixed(2)}</td>
+                        <td>PKR{s.total_bill.toFixed(2)}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -220,7 +220,7 @@ export default function Reports() {
                   <div className="stat-label">Table {t.table_number}</div>
                   <div className="stat-value">{t.total_games || 0} games</div>
                   <div className="stat-sub">{Math.floor((t.total_minutes || 0) / 60)}h {Math.round((t.total_minutes || 0) % 60)}m</div>
-                  <div className="stat-sub accent">₹{(t.total_revenue || 0).toFixed(2)}</div>
+                  <div className="stat-sub accent">PKR{(t.total_revenue || 0).toFixed(2)}</div>
                 </div>
               ))}
             </div>
@@ -304,7 +304,7 @@ export default function Reports() {
                         <td>{s.match_type === 'team' ? `${s.player1} & ${s.player2} vs ${s.player3} & ${s.player4}` : `${s.player1} vs ${s.player2}`}</td>
                         <td>{Math.floor(s.duration_minutes / 60)}h {Math.round(s.duration_minutes % 60)}m</td>
                         <td style={{ fontWeight: 600, color: 'var(--accent)' }}>{s.game_count || 1} game{s.game_count !== 1 ? 's' : ''}</td>
-                        <td>₹{s.total_bill.toFixed(2)}</td>
+                        <td>PKR{s.total_bill.toFixed(2)}</td>
                         <td style={{ fontSize: 12, color: 'var(--text-muted)' }}>
                           {new Date(s.start_time).toLocaleDateString()}
                         </td>
@@ -408,10 +408,10 @@ export default function Reports() {
                         : `${inv.player1} vs ${inv.player2}`}
                     </td>
                     <td>{inv.game_count}</td>
-                    <td>₹{inv.per_game_price}</td>
-                    <td>₹{inv.table_bill.toFixed(2)}</td>
-                    <td>₹{inv.canteen_bill.toFixed(2)}</td>
-                    <td style={{ fontWeight: 700, color: 'var(--accent)' }}>₹{inv.total_bill.toFixed(2)}</td>
+                    <td>PKR{inv.per_game_price}</td>
+                    <td>PKR{inv.table_bill.toFixed(2)}</td>
+                    <td>PKR{inv.canteen_bill.toFixed(2)}</td>
+                    <td style={{ fontWeight: 700, color: 'var(--accent)' }}>PKR{inv.total_bill.toFixed(2)}</td>
                     <td style={{ fontSize: 11, color: 'var(--text-muted)' }}>
                       {new Date(inv.generated_at).toLocaleTimeString()}
                     </td>
@@ -428,3 +428,6 @@ export default function Reports() {
     </div>
   );
 }
+
+
+

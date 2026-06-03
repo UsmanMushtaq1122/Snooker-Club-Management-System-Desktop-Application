@@ -327,6 +327,77 @@ async function initDatabase() {
     });
   }
 
+  exec(`
+    CREATE TABLE IF NOT EXISTS staff (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      role TEXT NOT NULL DEFAULT 'cashier',
+      phone TEXT,
+      email TEXT,
+      salary REAL DEFAULT 0,
+      joined_at TEXT NOT NULL DEFAULT (date('now', 'localtime')),
+      status TEXT NOT NULL DEFAULT 'active'
+    );
+  `);
+  exec(`
+    CREATE TABLE IF NOT EXISTS shift_reports (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      staff_id INTEGER NOT NULL,
+      date TEXT NOT NULL DEFAULT (date('now', 'localtime')),
+      clock_in TEXT,
+      clock_out TEXT,
+      notes TEXT,
+      created_at TEXT NOT NULL DEFAULT (datetime('now', 'localtime')),
+      FOREIGN KEY (staff_id) REFERENCES staff(id) ON DELETE CASCADE
+    );
+  `);
+  exec(`
+    CREATE TABLE IF NOT EXISTS performance_reports (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      staff_id INTEGER NOT NULL,
+      review_date TEXT NOT NULL DEFAULT (date('now', 'localtime')),
+      rating INTEGER NOT NULL DEFAULT 3,
+      notes TEXT,
+      created_at TEXT NOT NULL DEFAULT (datetime('now', 'localtime')),
+      FOREIGN KEY (staff_id) REFERENCES staff(id) ON DELETE CASCADE
+    );
+  `);
+
+  exec(`
+    CREATE TABLE IF NOT EXISTS staff_sessions (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      staff_id INTEGER NOT NULL,
+      login_time TEXT NOT NULL,
+      logout_time TEXT,
+      created_at TEXT NOT NULL DEFAULT (datetime('now', 'localtime')),
+      FOREIGN KEY (staff_id) REFERENCES staff(id) ON DELETE CASCADE
+    );
+  `);
+
+  const staffCols = query("PRAGMA table_info(staff)").map(c => c.name);
+  if (!staffCols.includes('username')) exec("ALTER TABLE staff ADD COLUMN username TEXT");
+  if (!staffCols.includes('password')) exec("ALTER TABLE staff ADD COLUMN password TEXT");
+
+  exec(`
+    CREATE TABLE IF NOT EXISTS membership_plans (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      duration_days INTEGER NOT NULL DEFAULT 30,
+      price REAL NOT NULL DEFAULT 0,
+      benefits TEXT DEFAULT '',
+      status TEXT NOT NULL DEFAULT 'active'
+    );
+  `);
+  const planCount = get('SELECT COUNT(*) as count FROM membership_plans');
+  if (planCount.count === 0) {
+    const plans = [
+      ['Monthly', 30, 500, 'Unlimited play for 30 days'],
+      ['Weekly', 7, 150, '7 days unlimited access'],
+      ['Daily Pass', 1, 50, 'Full day access'],
+    ];
+    plans.forEach(p => run('INSERT INTO membership_plans (name, duration_days, price, benefits) VALUES (?, ?, ?, ?)', p));
+  }
+
   const theme = get("SELECT value FROM settings WHERE key = 'theme'");
   if (!theme) {
     run("INSERT INTO settings (key, value) VALUES ('theme', 'dark')");
@@ -661,6 +732,103 @@ function updateInvoicePayment(invoiceId, paymentMethod, discount, discountType, 
   return get('SELECT * FROM invoices WHERE id = ?', [invoiceId]);
 }
 
+function getStaff() {
+  return query('SELECT * FROM staff ORDER BY name');
+}
+
+function getStaffMember(id) {
+  return get('SELECT * FROM staff WHERE id = ?', [id]);
+}
+
+function addStaff(name, role, username, password, phone, email, salary) {
+  run('INSERT INTO staff (name, role, username, password, phone, email, salary) VALUES (?, ?, ?, ?, ?, ?, ?)',
+    [name, role, username || null, password || null, phone || null, email || null, salary || 0]);
+  return get('SELECT * FROM staff WHERE id = last_insert_rowid()');
+}
+
+function updateStaff(id, name, role, username, password, phone, email, salary, status) {
+  if (password) {
+    run('UPDATE staff SET name = ?, role = ?, username = ?, password = ?, phone = ?, email = ?, salary = ?, status = ? WHERE id = ?',
+      [name, role, username || null, password, phone || null, email || null, salary || 0, status || 'active', id]);
+  } else {
+    run('UPDATE staff SET name = ?, role = ?, username = ?, phone = ?, email = ?, salary = ?, status = ? WHERE id = ?',
+      [name, role, username || null, phone || null, email || null, salary || 0, status || 'active', id]);
+  }
+  return get('SELECT * FROM staff WHERE id = ?', [id]);
+}
+
+function deleteStaff(id) {
+  run('DELETE FROM staff WHERE id = ?', [id]);
+}
+
+function staffLogin(staffId) {
+  const loginTime = new Date().toISOString();
+  run('INSERT INTO staff_sessions (staff_id, login_time) VALUES (?, ?)', [staffId, loginTime]);
+  const session = get('SELECT * FROM staff_sessions WHERE id = last_insert_rowid()');
+  const staff = getStaffMember(staffId);
+  return { ...session, staff_name: staff?.name, role: staff?.role };
+}
+
+function staffLogout(sessionId) {
+  const logoutTime = new Date().toISOString();
+  run('UPDATE staff_sessions SET logout_time = ? WHERE id = ?', [logoutTime, sessionId]);
+  return get('SELECT * FROM staff_sessions WHERE id = ?', [sessionId]);
+}
+
+function getStaffSessions() {
+  return query(`
+    SELECT ss.*, s.name as staff_name, s.role
+    FROM staff_sessions ss JOIN staff s ON s.id = ss.staff_id
+    ORDER BY ss.login_time DESC
+  `);
+}
+
+function getShiftReports(staffId) {
+  if (staffId) {
+    return query('SELECT sr.*, s.name as staff_name FROM shift_reports sr JOIN staff s ON s.id = sr.staff_id WHERE sr.staff_id = ? ORDER BY sr.date DESC', [staffId]);
+  }
+  return query('SELECT sr.*, s.name as staff_name FROM shift_reports sr JOIN staff s ON s.id = sr.staff_id ORDER BY sr.date DESC');
+}
+
+function addShiftReport(staffId, date, clockIn, clockOut, notes) {
+  run('INSERT INTO shift_reports (staff_id, date, clock_in, clock_out, notes) VALUES (?, ?, ?, ?, ?)',
+    [staffId, date || new Date().toISOString().split('T')[0], clockIn || null, clockOut || null, notes || null]);
+  return get('SELECT sr.*, s.name as staff_name FROM shift_reports sr JOIN staff s ON s.id = sr.staff_id WHERE sr.id = last_insert_rowid()');
+}
+
+function getPerformanceReports(staffId) {
+  if (staffId) {
+    return query('SELECT pr.*, s.name as staff_name FROM performance_reports pr JOIN staff s ON s.id = pr.staff_id WHERE pr.staff_id = ? ORDER BY pr.review_date DESC', [staffId]);
+  }
+  return query('SELECT pr.*, s.name as staff_name FROM performance_reports pr JOIN staff s ON s.id = pr.staff_id ORDER BY pr.review_date DESC');
+}
+
+function addPerformanceReport(staffId, reviewDate, rating, notes) {
+  run('INSERT INTO performance_reports (staff_id, review_date, rating, notes) VALUES (?, ?, ?, ?)',
+    [staffId, reviewDate || new Date().toISOString().split('T')[0], rating || 3, notes || null]);
+  return get('SELECT pr.*, s.name as staff_name FROM performance_reports pr JOIN staff s ON s.id = pr.staff_id WHERE pr.id = last_insert_rowid()');
+}
+
+function getMembershipPlans() {
+  return query('SELECT * FROM membership_plans ORDER BY price');
+}
+
+function addMembershipPlan(name, durationDays, price, benefits) {
+  run('INSERT INTO membership_plans (name, duration_days, price, benefits) VALUES (?, ?, ?, ?)',
+    [name, durationDays, price, benefits || '']);
+  return get('SELECT * FROM membership_plans WHERE id = last_insert_rowid()');
+}
+
+function updateMembershipPlan(id, name, durationDays, price, benefits, status) {
+  run('UPDATE membership_plans SET name = ?, duration_days = ?, price = ?, benefits = ?, status = ? WHERE id = ?',
+    [name, durationDays, price, benefits || '', status || 'active', id]);
+  return get('SELECT * FROM membership_plans WHERE id = ?', [id]);
+}
+
+function deleteMembershipPlan(id) {
+  run('DELETE FROM membership_plans WHERE id = ?', [id]);
+}
+
 module.exports = {
   initDatabase,
   getSettings,
@@ -691,4 +859,20 @@ module.exports = {
   getAllSessions,
   getLatestSessionByTable,
   completeTableOrder,
+  getStaff,
+  getStaffMember,
+  addStaff,
+  updateStaff,
+  deleteStaff,
+  getShiftReports,
+  addShiftReport,
+  getPerformanceReports,
+  addPerformanceReport,
+  staffLogin,
+  staffLogout,
+  getStaffSessions,
+  getMembershipPlans,
+  addMembershipPlan,
+  updateMembershipPlan,
+  deleteMembershipPlan,
 };
